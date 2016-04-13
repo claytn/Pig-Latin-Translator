@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <style type="text/css">
+        body{
+            background-color: pink;
+            position: relative;
+            bottom: 100px;
+        } 
+        
+        #translator{
+            position: relative;
+            left: 350px;
+            top: 100px;
+            font-family: monospace;
+            font-size: 50px;
+        }
+        form{
+            position: relative;
+            right: 150px;
+            padding-top: 25px;
+        }
+        
+        #pigPic{
+            position: relative;
+            left: 520px;
+            top: 100px;
+        }
+        
+        #press{
+            position: relative;
+            left: 242px;
+            bottom: 140px;
+        }
+        
+        #selectTrans{
+            margin-top: 20px;
+            font-size: 15px;
+            position: relative;
+            left: 170px;
+        }
+        
+        .instructions{
+            font-size: 20px;
+            
+        }
+         
+        #rightInstruct{
+            position: relative;
+            left: 500px;
+        }
+        
+        #leftInstruct{
+            position: relative;
+            top: 40px;
+        }
+        
+   
+    </style>
+    
+    
+    <body>
+        <img id ="pigPic"src= "9iRnz6nie.png" width="200px"/>
+        <div id="translator">
+            
+        Pig-Latin Translator.
+            <br />
+            <div id="selectTrans">
+            <input type="radio" id="input1" name="translationType" value="0"/>Text -> Pig-Latin <br />
+            <input type="radio" id="input2" name="translationType" value="1"/> Pig-Latin -> Text
+            </div>
+        <form>
+            
+            
+            <p class="instructions" id="leftInstruct">To Be Translated</p>
+            <p class="instructions" id="rightInstruct">Translated</p>
+            <textarea style="margin-right: 80px" id="enter" rows="10" cols="50">
+                
+            </textarea>
+            
+            <textarea id="exit" rows="10" cols="50">
+            
+            
+            </textarea>
+            </form>
+            <button id="press" type="button" onClick="runMe()">Translate</button>
+        </div>
+            <br />
+        
+    </body>
+<script src="jquery-1.12.2.min.js"></script>
+<script>
+    
+
+function toLatin() {
+    var str = (document.getElementById("enter").value).trim();
+    var words = str.split(" ");
+    for(i = 0; i< words.length; i++){
+        if(words[i].length > 0){
+        words[i] = words[i].substring(1, words[i].length) + words[i].charAt(0) + "ae";
+        }
+    }
+    str = "";
+    for(i = 0; i < words.length; i++){
+        str += words[i] + " ";
+    }
+    document.getElementById("exit").value = str;
+}
+    
+function toText(){
+     var str = (document.getElementById("enter").value).trim();
+    var words = str.split(" ");
+    for(i = 0; i< words.length; i++){
+        if(words[i].length > 0){
+        words[i] = words[i].charAt(words[i].length-3) + words[i].substring(0, words[i].length-3) ;
+        }
+    }
+    str = "";
+    for(i = 0; i < words.length; i++){
+        str += words[i] + " ";
+    }
+    document.getElementById("exit").value = str;
+}
+    
+function runMe(){
+
+    if(($('input[id=input1]:checked').length > 0)){
+        toLatin();
+    }
+    else if(($('input[id=input2]:checked').length > 0)){
+        toText();
+    }
+    
+}
+</script>
+
+    
+    
+    
+    
+</html>
