@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 
 <html>
-    
+  <header>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  </header>
+
     <style type="text/css">
         body{
             background-color: pink;
             position: relative;
             bottom: 100px;
-        } 
-        
+        }
+
         #translator{
             position: relative;
             left: 350px;
@@ -21,84 +28,112 @@
             right: 150px;
             padding-top: 25px;
         }
-        
+
         #pigPic{
             position: relative;
             left: 520px;
             top: 100px;
         }
-        
+
         #press{
             position: relative;
             left: 242px;
             bottom: 140px;
         }
-        
+
         #selectTrans{
             margin-top: 20px;
             font-size: 15px;
             position: relative;
             left: 170px;
         }
-        
+
         .instructions{
             font-size: 20px;
-            
+
         }
-         
+
         #rightInstruct{
             position: relative;
             left: 500px;
         }
-        
+
         #leftInstruct{
             position: relative;
             top: 40px;
         }
-        
-   
+
+
     </style>
-    
-    
+
+
     <body>
         <img id ="pigPic"src= "9iRnz6nie.png" width="200px"/>
         <div id="translator">
-            
+
         Pig-Latin Translator.
             <br />
             <div id="selectTrans">
             <input type="radio" id="input1" name="translationType" value="0"/>Text -> Pig-Latin <br />
             <input type="radio" id="input2" name="translationType" value="1"/> Pig-Latin -> Text
             </div>
-        <form>
-            
-            
+
+
+
             <p class="instructions" id="leftInstruct">To Be Translated</p>
             <p class="instructions" id="rightInstruct">Translated</p>
+
+
+              <form>
             <textarea style="margin-right: 80px" id="enter" rows="10" cols="50">
-                
+
             </textarea>
-            
+
             <textarea id="exit" rows="10" cols="50">
-            
-            
+
+
             </textarea>
             </form>
-            <button id="press" type="button" onClick="runMe()">Translate</button>
+
+            <button id="press" type="button" onclick="runMe();">Translate</button>
         </div>
-            <br />
-        
+        <br />
+
     </body>
+
 <script src="jquery-1.12.2.min.js"></script>
 <script>
-    
+
+function exists(test){
+  var alphaNum = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
+  for(var i = 0; i < alphaNum.length; i++){
+    if(alphaNum[i] === test){
+      return true;
+    }
+  }
+  return false;
+}
 
 function toLatin() {
     var str = (document.getElementById("enter").value).trim();
     var words = str.split(" ");
+
     for(i = 0; i< words.length; i++){
-        if(words[i].length > 0){
-        words[i] = words[i].substring(1, words[i].length) + words[i].charAt(0) + "ae";
+        let indexOfLastPunc = -1;
+        for(var j = words[i].length-1; j >= 0; j--){
+          console.log(words[i].charAt(j));
+          if(exists(words[i].charAt(j))){
+            indexOfLastPunc = j;
+            break;
+          }
+        }
+        if(indexOfLastPunc === -1){
+          continue;
+        }
+        else if(words[i].length > 0){
+        words[i] = words[i].substring(1, indexOfLastPunc+1)+ words[i].charAt(0) + "ay" + words[i].substring(indexOfLastPunc+1, words[i].length);
+        console.log(indexOfLastPunc);
+        console.log(words[i].substring(1,indexOfLastPunc+1));
         }
     }
     str = "";
@@ -107,13 +142,20 @@ function toLatin() {
     }
     document.getElementById("exit").value = str;
 }
-    
+
 function toText(){
-     var str = (document.getElementById("enter").value).trim();
+    var str = (document.getElementById("enter").value).trim();
     var words = str.split(" ");
     for(i = 0; i< words.length; i++){
         if(words[i].length > 0){
-        words[i] = words[i].charAt(words[i].length-3) + words[i].substring(0, words[i].length-3) ;
+        var indexOfLastCharacter;
+        for(var j = words[i].length-1; j >= 0; j--){
+          if(exists(words[i].charAt(j))){
+            indexOfLastCharacter = j;
+            break;
+          }
+        }
+        words[i] = words[i].charAt(indexOfLastCharacter-2) + words[i].substring(0, indexOfLastCharacter-2)+words[i].substring(indexOfLastCharacter+1, words[i].length) ;
         }
     }
     str = "";
@@ -122,21 +164,23 @@ function toText(){
     }
     document.getElementById("exit").value = str;
 }
-    
-function runMe(){
 
+function runMe(){
+    console.log('runMe called.');
     if(($('input[id=input1]:checked').length > 0)){
         toLatin();
     }
     else if(($('input[id=input2]:checked').length > 0)){
         toText();
     }
-    
+
 }
+
+
 </script>
 
-    
-    
-    
-    
+
+
+
+
 </html>
