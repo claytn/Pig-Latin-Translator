@@ -38,16 +38,14 @@ font-family: 'Baloo Paaji', cursive;
 </head>
 <body class="container text-center main">
 <img src="9iRnz6nie.png" width="20%" height="20%"/>
- <h1>Pig-Latin Translator</h1>
+ <h1 style="font-size: 3em;">Pig-Latin Translator</h1>
 
  <textarea style="font-size: 2em;" class="form-control" rows="6" cols="10" id="enter"></textarea>
- 
+
  <h3 style="display: inline-block; position:relative; top: 10px;"> Translate...</h3>
  <button onclick="toLatin();" style="background-color: #ff66b3; border: none;" type="button" class="btn btn-primary btn-lg translateButton">To Pig-Latin</button>
  <button onclick="toText();" style="background-color: #ff66b3; border: none;" type="button" class="btn btn-primary btn-lg translateButton">From Pig-Latin</button>
- <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 
- <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -57,7 +55,7 @@ font-family: 'Baloo Paaji', cursive;
 <script type="text/javascript">
 
 function exists(test){
-  var alphaNum = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
+  var alphaNum = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('');
   for(var i = 0; i < alphaNum.length; i++){
     if(alphaNum[i] === test){
       return true;
@@ -70,10 +68,10 @@ function toLatin() {
     var str = (document.getElementById("enter").value).trim();
     var words = str.split(" ");
 
-    for(i = 0; i< words.length; i++){
+    for(i = 0; i < words.length; i++){
         let indexOfLastPunc = -1;
         for(var j = words[i].length-1; j >= 0; j--){
-          console.log(words[i].charAt(j));
+          //console.log(words[i].charAt(j));
           if(exists(words[i].charAt(j))){
             indexOfLastPunc = j;
             break;
